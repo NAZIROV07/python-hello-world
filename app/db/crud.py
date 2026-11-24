@@ -58,8 +58,13 @@ def create_book(db, title, description, price, category_id, url=None):
     return book
 
 
-def get_books(db):
-    return db.query(Book).all()
+def get_books(db, category_id=None):
+    query = db.query(Book)
+
+    if category_id is not None:
+        query = query.filter(Book.category_id == category_id)
+
+    return query.all()
 
 
 def get_book(db, book_id):
